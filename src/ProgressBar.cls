@@ -435,7 +435,7 @@ Private Sub UpdateTime()
     Dim elapsedTime As Date
     Dim remainingTime As Date
     '
-    elapsedTime = VBA.Now - m_startTime
+    elapsedTime = Now - m_startTime
     remainingTime = elapsedTime / m_currentValue * (1 - m_currentValue)
     '
     UpdateTimeLabel m_elapsed, elapsedTime, "Elapsed time: "
@@ -469,6 +469,7 @@ Public Function RunMacro(ByVal targetBook As Workbook _
     End If
     '
     LetSet(RunMacro) = Run(procedure, targetBook, Nothing)
+    Erase m_args 'Avoid circular reference to this instance
 End Function
 
 '*******************************************************************************
@@ -491,6 +492,7 @@ Public Function RunObjMethod(ByVal targetObject As Object _
     End If
     '
     LetSet(RunObjMethod) = Run(procedure, Nothing, targetObject)
+    Erase m_args 'Avoid circular reference to this instance
 End Function
 
 '*******************************************************************************
